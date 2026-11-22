@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fascicolo #2211 — La Verità</title>
+    <!-- Caricamento Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Inter e JetBrains Mono per il timer -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #0a0a0a;
+            overflow-x: hidden;
+        }
+        .font-mono-timer {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        /* Animazione sottile di ingresso */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .animate-reveal {
+            animation: fadeInUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .delay-1 { animation-delay: 0.25s; opacity: 0; }
+        .delay-2 { animation-delay: 0.65s; opacity: 0; }
+        .delay-3 { animation-delay: 1.05s; opacity: 0; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between items-center bg-white text-neutral-950 px-6 py-8 sm:py-12 selection:bg-black selection:text-white">
+
+    <!-- Intestazione discreta in alto -->
+    <header class="w-full max-w-3xl flex justify-between items-center text-[11px] sm:text-xs uppercase tracking-[0.2em] text-neutral-400 border-b border-neutral-100 pb-4">
+        <span>Fascicolo #2211/26-BIS</span>
+        <span class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+            Desecretato
+        </span>
+    </header>
+
+    <!-- Contenuto Centrale -->
+    <main class="w-full max-w-4xl flex flex-col items-center text-center my-auto py-10">
+        
+        <!-- PERCHÉ Gigante -->
+        <h1 class="animate-reveal font-black tracking-tighter text-neutral-950 leading-none select-none mb-8 sm:mb-12"
+            style="font-size: clamp(4.2rem, 18vw, 13rem);">
+            PERCHÉ?
+        </h1>
+
+        <!-- Separatore minimal -->
+        <div class="animate-reveal delay-1 w-12 h-1 bg-neutral-950 rounded-full mb-8 sm:mb-10"></div>
+
+        <!-- La Domanda -->
+        <p class="animate-reveal delay-1 text-xl sm:text-3xl md:text-4xl font-bold text-neutral-900 tracking-tight max-w-2xl mb-6 sm:mb-8 leading-snug">
+            Perché i kamikaze portavano il casco?
+        </p>
+
+        <!-- La Risposta -->
+        <div class="animate-reveal delay-2 max-w-xl bg-neutral-50 border border-neutral-200/80 rounded-2xl p-6 sm:p-8 shadow-sm">
+            <p class="text-base sm:text-lg md:text-xl text-neutral-600 font-normal leading-relaxed">
+                <strong class="font-semibold text-neutral-950">Per sicurezza.</strong> La stessa sicurezza con cui hai cliccato su tutti i nostri indizi fino a questo vicolo cieco.
+            </p>
+        </div>
+
+    </main>
+
+    <!-- Footer con Countdown fino alle 22:00 di stasera (22 Novembre 2026) -->
+    <footer class="animate-reveal delay-3 w-full max-w-md flex flex-col items-center text-center pt-6 border-t border-neutral-100">
+        <span id="timer-label" class="text-[11px] sm:text-xs uppercase tracking-[0.18em] text-neutral-400 font-medium mb-2">
+            Tempo rimanente prima della chiusura del fascicolo:
+        </span>
+        
+        <div id="countdown" class="font-mono-timer text-3xl sm:text-4xl font-bold tracking-wider text-neutral-950 bg-neutral-100/70 px-6 py-3 rounded-xl border border-neutral-200/60">
+            00:00:00
+        </div>
+
+        <p class="text-[11px] text-neutral-400 mt-3">
+            22 Novembre 2026 &bull; Ore 22:00:00
+        </p>
+    </footer>
+
+    <script>
+        (function() {
+            // Data target: 22 Novembre 2026 alle ore 22:00:00 (ora locale del dispositivo)
+            const targetDate = new Date(2026, 10, 22, 22, 0, 0).getTime(); // Mese 10 = Novembre (0-indexed)
+
+            const countdownEl = document.getElementById('countdown');
+            const labelEl = document.getElementById('timer-label');
+
+            function padZero(num) {
+                return num < 10 ? '0' + num : String(num);
+            }
+
+            function updateCountdown() {
+                const now = new Date().getTime();
+                const distance = targetDate - now;
+
+                if (distance <= 0) {
+                    countdownEl.textContent = "00:00:00";
+                    countdownEl.classList.add('text-red-600');
+                    labelEl.textContent = "FASCICOLO ARCHIVIATO. FINE DELL'ESPERIMENTO.";
+                    return;
+                }
+
+                // Calcolo ore totali, minuti e secondi
+                const hours = Math.floor(distance / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                countdownEl.textContent = `${padZero(hours)}:${padZero(minutes)}:${padZero(seconds)}`;
+            }
+
+            // Avvio immediato e aggiornamento ogni secondo
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+        })();
+    </script>
+</body>
+</html>
